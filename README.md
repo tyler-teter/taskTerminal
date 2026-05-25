@@ -17,7 +17,7 @@ Keyboard-friendly terminal task manager built with Textual + SQLite.
 ## One-click launch (Windows)
 - Double-click `Launch Task Terminal.bat` from this folder.
 - It uses `uv` to install/use Python 3.12, verify `sqlite3`, install requirements in an isolated environment, and start the app.
-- If `uv` is missing, install it from https://docs.astral.sh/uv/getting-started/installation/.
+- If `uv` is missing, the launcher installs it with the official Astral Windows installer.
 
 ## Install (manual)
 ```bash

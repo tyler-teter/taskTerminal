@@ -14,13 +14,26 @@ echo Working folder: %CD% >> "%LOG_FILE%"
 
 where uv >nul 2>nul
 if errorlevel 1 (
-  echo [ERROR] uv was not found on PATH.
+  echo uv was not found on PATH.
   echo.
-  echo Install uv first, then double-click this launcher again:
-  echo   https://docs.astral.sh/uv/getting-started/installation/
+  echo Installing uv with the official Astral Windows installer...
   echo.
-  echo [ERROR] uv was not found on PATH. >> "%LOG_FILE%"
-  goto finish
+  echo uv missing; starting installer. >> "%LOG_FILE%"
+  powershell -NoProfile -ExecutionPolicy ByPass -Command "irm https://astral.sh/uv/install.ps1 | iex" >> "%LOG_FILE%" 2>&1
+  if errorlevel 1 (
+    echo [ERROR] uv installation failed.
+    echo See launcher.log for details.
+    goto finish
+  )
+
+  set "PATH=%USERPROFILE%\.local\bin;%USERPROFILE%\.cargo\bin;%PATH%"
+  where uv >nul 2>nul
+  if errorlevel 1 (
+    echo [ERROR] uv installed, but it is not available in this terminal yet.
+    echo Close this window and double-click the launcher again.
+    echo See launcher.log for details.
+    goto finish
+  )
 )
 
 echo [1/4] Checking uv...
