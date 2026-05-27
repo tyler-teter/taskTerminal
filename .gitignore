@@ -3,3 +3,4 @@
 __pycache__/
 *.pyc
 launcher.log
+.shortcuts-offered

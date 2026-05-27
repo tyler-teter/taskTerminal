@@ -19,6 +19,12 @@ Keyboard-friendly terminal task manager built with Textual + SQLite.
 - It uses `uv` to install/use Python 3.12, verify `sqlite3`, install requirements in an isolated environment, and start the app.
 - If `uv` is missing, the launcher installs it with the official Astral Windows installer.
 
+### Add to Start Menu and Desktop
+- After the first successful run, the launcher asks once whether to install Start Menu and Desktop shortcuts.
+- Choose `Y` to register **Task Terminal** in Windows so it appears in the Apps list and Start search; from then on you can launch it by typing "Task Terminal" into Start.
+- To pin to the taskbar, right-click the Start Menu entry and choose **Pin to taskbar**.
+- The shortcuts point at this folder. If you move the repo, delete the old shortcuts and delete `.shortcuts-offered` so the launcher offers to recreate them on the next run.
+
 ## Install (manual)
 ```bash
 uv python install 3.12

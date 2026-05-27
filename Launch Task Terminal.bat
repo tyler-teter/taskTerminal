@@ -1,5 +1,5 @@
 @echo off
-setlocal EnableExtensions
+setlocal EnableExtensions EnableDelayedExpansion
 
 cd /d "%~dp0"
 title Task Terminal Launcher
@@ -79,6 +79,24 @@ if not "%APP_EXIT%"=="0" (
 ) else (
   echo.
   echo Task Terminal closed.
+)
+
+set "SHORTCUT_MARKER=%~dp0.shortcuts-offered"
+if "%APP_EXIT%"=="0" if not exist "%SHORTCUT_MARKER%" (
+  echo.
+  echo Add Task Terminal to your Start Menu and Desktop for easy access?
+  set /p INSTALL_SHORTCUTS=Type Y to install, anything else to skip: 
+  if /i "!INSTALL_SHORTCUTS!"=="Y" (
+    powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0scripts\create-windows-shortcuts.ps1" -LauncherPath "%~f0" -WorkingDirectory "%~dp0." >> "%LOG_FILE%" 2>&1
+    if errorlevel 1 (
+      echo [WARN] Could not create shortcuts. See launcher.log for details.
+    ) else (
+      echo Shortcuts installed. Search "Task Terminal" in the Start Menu.
+    )
+  ) else (
+    echo Skipped. You can re-enable this prompt by deleting "%SHORTCUT_MARKER%".
+  )
+  echo offered > "%SHORTCUT_MARKER%"
 )
 
 :finish
